@@ -3,16 +3,17 @@ import {mdLinksMl} from "../index.js";
 
 describe('mdLinksMl', () => {
 
-  it('should...', () => {
+  /*it('should...', () => {
     console.log('FIX ME!');
-  });
-  it('Deberia devolver una promesa', () => {
+  });*/
+ /* it('Deberia devolver una promesa', () => {
     expected(mdLinksMl()).toBe(typeof Promise);
-  });
-  /*it('Debe rechazar cuando el path no existe', () =>{
+  });*/ 
+  //¡instancia=pertenece a la categoria! "instanceof promise"
+  it('Debe rechazar cuando el path no existe', () =>{
     return mdLinksMl('/rutaSinExistir.md').catch((error)=>{
       expect(error).toBe('La ruta no existe, no podemos continuar')
     })
-  })*/
+  })
 
 });
