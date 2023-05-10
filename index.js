@@ -10,6 +10,7 @@ export const mdLinksMl = (path = "README.md", options) => { // Creamos la instan
   return new Promise((resolve, reject) => {
     //Identificamos si es una ruta 
     if (existsSync(path)) {
+      console.log('la ruta existe')
 //confirmamos si la ruta es absoluta o la convertimos 
 // startsWith()Determina si una cadena comienza con los caracteres dde una cadena especifica
 const isPathAbsolute = isAbsolute(path);
@@ -18,7 +19,7 @@ if(isPathAbsolute === true){
   //Nuestra ruta absoluta
 
 }else{
-  console.log(resolvePath(path));
+  console.log('ruta resolviendose', resolvePath(path));
   // convertir la ruta
 }
 //Contiua la logica de Diagrama 

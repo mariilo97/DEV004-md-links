@@ -6,9 +6,10 @@ describe('mdLinksMl', () => {
   /*it('should...', () => {
     console.log('FIX ME!');
   });*/
- /* it('Deberia devolver una promesa', () => {
-    expected(mdLinksMl()).toBe(typeof Promise);
-  });*/ 
+  it('Deberia devolver una promesa', () => {
+    const res = mdLinksMl('./index.js');
+    expect(res instanceof Promise).toBe(true);
+  });
   //¡instancia=pertenece a la categoria! "instanceof promise"
   it('Debe rechazar cuando el path no existe', () =>{
     return mdLinksMl('/rutaSinExistir.md').catch((error)=>{
