@@ -22,6 +22,7 @@ if(isPathAbsolute === true){
   // convertir la ruta
 }
 //Contiua la logica de Diagrama 
+
 //comprobamos si es un archivo ("statSync" Permite saber si el archivo encontrado es un directorio o una funcion)
     } else {
       //Si no existe la ruta rechazamos la promesa.
