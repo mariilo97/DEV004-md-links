@@ -3,6 +3,7 @@ import { log } from 'console';
 import { existsSync, statSync } from 'fs';
 // AS es para crear un alias cuando dos nombres son los mismos y no se crucen en la funcion 
 import { isAbsolute, resolve as resolvePath, extname } from 'path';
+import { leerArchivo } from "./Api.js";
 // Mi constante debe tener como parametro Path y Option (lo que necesitamos reconocer y como resolverlo(si valida o no))
 //const mdLinksMl = (path, options) => {
 export const mdLinksMl = (path = "README.md", options) => { // Creamos la instancia de markdown-it
@@ -36,10 +37,13 @@ if(stats.isFile() === true){
   console.log('es un archivo', extname(path));
   //creamos la instancia del archivo 
   if(extname(path) === ".md"){
-    console.log('Es un archivo MD');
+    console.log('Es un archivo MD'  );
+    leerArchivo().then((res)=>{ console.log(res);})
   }else{
     console.log('Este archivo no contiene MD');
   }
+}else{
+  console.log('Por el momento no leemos directorios, prueba con un archivo');
 }
 }
 //Contiua la logica de Diagrama 
