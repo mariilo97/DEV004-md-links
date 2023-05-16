@@ -1,8 +1,8 @@
 //creamos nuestros require
 import { log } from 'console';
-import { existsSync } from 'fs';
+import { existsSync, statSync } from 'fs';
 // AS es para crear un alias cuando dos nombres son los mismos y no se crucen en la funcion 
-import { isAbsolute, resolve as resolvePath } from 'path';
+import { isAbsolute, resolve as resolvePath, extname } from 'path';
 // Mi constante debe tener como parametro Path y Option (lo que necesitamos reconocer y como resolverlo(si valida o no))
 //const mdLinksMl = (path, options) => {
 export const mdLinksMl = (path = "README.md", options) => { // Creamos la instancia de markdown-it
@@ -17,10 +17,30 @@ const isPathAbsolute = isAbsolute(path);
 if(isPathAbsolute === true){
   console.log('Ruta absoluta');
   //Nuestra ruta absoluta
-
+  //usar "statSync()" es un metodo estatico de fs 
+  // let stats = statSync(path);
+  // if(stats.isFile() === true){
+  //   console.log('es un archivo', extname(path));
+  //   //creamos la instancia del archivo 
+  //   if(extname(path) === ".md"){
+  //     console.log('Es un archivo MD');
+  //   }else{
+  //     console.log('Este archivo no contiene MD');
+  //   }
+  // }
 }else{
   console.log('ruta resolviendose', resolvePath(path));
   // convertir la ruta
+  let stats = statSync(path);
+if(stats.isFile() === true){
+  console.log('es un archivo', extname(path));
+  //creamos la instancia del archivo 
+  if(extname(path) === ".md"){
+    console.log('Es un archivo MD');
+  }else{
+    console.log('Este archivo no contiene MD');
+  }
+}
 }
 //Contiua la logica de Diagrama 
 
