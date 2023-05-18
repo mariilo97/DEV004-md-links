@@ -7,15 +7,11 @@ export const leerArchivo = () => {
     if (err) reject(err);
     {
       // console.log('algo pasa aqui', data)
-    
        resolve(data)
     }
-    
   })
-
-  })
-
+ })
 } 
-
  
 //Extraer los links 
+

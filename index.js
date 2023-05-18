@@ -37,7 +37,7 @@ if(stats.isFile() === true){
   console.log('es un archivo', extname(path));
   //creamos la instancia del archivo 
   if(extname(path) === ".md"){
-    console.log('Es un archivo MD'  );
+    console.log('Es un archivo MD');
     leerArchivo().then((res)=>{ console.log(res);})
   }else{
     console.log('Este archivo no contiene MD');
