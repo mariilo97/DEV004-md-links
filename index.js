@@ -1,9 +1,9 @@
 //creamos nuestros require
-import { log } from 'console';
+import { Console, log } from 'console';
 import { existsSync, statSync } from 'fs';
 // AS es para crear un alias cuando dos nombres son los mismos y no se crucen en la funcion 
 import { isAbsolute, resolve as resolvePath, extname } from 'path';
-import { extraerLinks, leerArchivo } from "./Api.js";
+import { extraerLinks, leerArchivo, validLinks } from "./Api.js";
 // Mi constante debe tener como parametro Path y Option (lo que necesitamos reconocer y como resolverlo(si valida o no))
 //const mdLinksMl = (path, options) => {
 export const mdLinksMl = (route, options) => { // Creamos la instancia de markdown-it
@@ -11,12 +11,12 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
   return new Promise((resolve, reject) => {
     //Identificamos si es una ruta 
     if (existsSync(route)) {
-      resolve('la ruta existe')
+      // resolve('la ruta existe')
       //confirmamos si la ruta es absoluta o la convertimos 
       // startsWith()Determina si una cadena comienza con los caracteres dde una cadena especifica
       //const isPathAbsolute = isAbsolute(route);
       if (isAbsolute(route)) {
-        resolve('Ruta absoluta');
+        // resolve('Ruta absoluta');
         //Nuestra ruta absoluta
         //usar "statSync()" es un metodo estatico de fs 
         // let stats = statSync(path);
@@ -35,12 +35,21 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
         // convertir la ruta
         let stats = statSync(routeAbsolute);
         if (stats.isFile() === true) {
-          resolve('es un archivo', extname(routeAbsolute));
+          // resolve('es un archivo', extname(routeAbsolute));
           //creamos la instancia del archivo 
           if (extname(routeAbsolute) === ".md") {
             console.log('Es un archivo MD');
             leerArchivo(routeAbsolute).then((res) => {
-              console.log(res, extraerLinks(res, routeAbsolute));
+              // console.log('*****', extraerLinks(res,routeAbsolute))
+              // resolve();
+             const array3props = extraerLinks(res, routeAbsolute)
+            //  console.table(prueba)
+            validLinks(array3props).then((res)=>{
+              console.log(res, 48); // cambiar por resolve
+            }).catch((err)=>{
+              console.log(err, 50);
+            })
+            //  resolve()
               // resultado de extraer links recorrerlo y hacer petcion http
               // const arrayLinks = extraerLinks()
               //  console.log(arrayLinks)
@@ -72,4 +81,6 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
 
 
 
-mdLinksMl('pruebas.md/Prueba1.md');
+mdLinksMl('pruebas.md/Prueba2.md')
+.catch((err)=>{console.log(err)})
+.then(console.log)
