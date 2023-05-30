@@ -5,30 +5,38 @@ import { existsSync, statSync } from 'fs';
 import { isAbsolute, resolve as resolvePath, extname } from 'path';
 import { extraerLinks, leerArchivo, validLinks } from "./Api.js";
 // Mi constante debe tener como parametro Path y Option (lo que necesitamos reconocer y como resolverlo(si valida o no))
-//const mdLinksMl = (path, options) => {
 export const mdLinksMl = (route, options) => { // Creamos la instancia de markdown-it
   //Creamos la promesa, Funtion(Ejecuta), Callback(resolve y reject = funcion que resuelve la promesa(.then) o rechasa la promesa(.catch))
   return new Promise((resolve, reject) => {
     //Identificamos si es una ruta 
     if (existsSync(route)) {
       // resolve('la ruta existe')
-      //confirmamos si la ruta es absoluta o la convertimos 
-      // startsWith()Determina si una cadena comienza con los caracteres dde una cadena especifica
-      //const isPathAbsolute = isAbsolute(route);
-      if (isAbsolute(route)) {
+      if (isAbsolute(route)) {  //confirmamos si la ruta es absoluta
         // resolve('Ruta absoluta');
         //Nuestra ruta absoluta
         //usar "statSync()" es un metodo estatico de fs 
-        // let stats = statSync(path);
-        // if(stats.isFile() === true){
-        //   console.log('es un archivo', extname(path));
-        //   //creamos la instancia del archivo 
-        //   if(extname(path) === ".md"){
-        //     console.log('Es un archivo MD');
-        //   }else{
-        //     console.log('Este archivo no contiene MD');
-        //   }
-        // }
+        let stats = statSync(route);
+        if(stats.isFile() === true){
+          console.log('es un archivo', extname(route));
+          //creamos la instancia del archivo 
+          if(extname(route) === ".md"){
+            console.log('Es un archivo MD');
+            leerArchivo(route).then((res)=>{
+              console.log(res, 26);
+              const tresObjetos = extraerLinks(res, route)
+              validLinks(tresObjetos).then((res)=>{
+                console.log(res, 29);
+              }).catch((err)=>{
+                console.log(err, 31);
+              })
+            // }).catch((err)=>{
+            //   console.log(err);
+            // })
+            })
+          }else{
+            console.log('Este archivo no contiene MD');
+          }
+        }
       } else {
         console.log('ruta resolviendose', );
         const routeAbsolute = resolvePath(route)
@@ -45,11 +53,10 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
              const array3props = extraerLinks(res, routeAbsolute)
             //  console.table(prueba)
             validLinks(array3props).then((res)=>{
-              console.log(res, 48); // cambiar por resolve
+              console.log(res, 55); // cambiar por resolve
             }).catch((err)=>{
-              console.log(err, 50);
+              console.log(err, 57);
             })
-            //  resolve()
               // resultado de extraer links recorrerlo y hacer petcion http
               // const arrayLinks = extraerLinks()
               //  console.log(arrayLinks)
@@ -61,26 +68,13 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
           reject('Por el momento no leemos directorios, prueba con un archivo');
         }
       }
-      //Contiua la logica de Diagrama 
-
-      //comprobamos si es un archivo ("statSync" Permite saber si el archivo encontrado es un directorio o una funcion)
     } else {
       //Si no existe la ruta rechazamos la promesa.
       reject('La ruta no existe, no podemos continuar')    
     }
   })
 }
-//const md = fs.readFileSync(path, 'utf8');
 
-/*module.exports = {
-  mdLinksMl
-};*/
-
-// Import the path module
-// const path = require('path');
-
-
-
-mdLinksMl('pruebas.md/Prueba2.md')
+mdLinksMl('C:/Users/MARY LOPEZ/DEV004-md-links/README.md')
 .catch((err)=>{console.log(err)})
 .then(console.log)
