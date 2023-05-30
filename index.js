@@ -20,25 +20,25 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
           console.log('es un archivo', extname(route));
           //creamos la instancia del archivo 
           if(extname(route) === ".md"){
-            console.log('Es un archivo MD');
+           // console.log('Es un archivo MD');
             leerArchivo(route).then((res)=>{
-              console.log(res, 26);
+              //console.log(res, 25);
               const tresObjetos = extraerLinks(res, route)
               validLinks(tresObjetos).then((res)=>{
-                console.log(res, 29);
+                console.log(res, 28);
               }).catch((err)=>{
-                console.log(err, 31);
+                console.log(err, 30);
               })
             // }).catch((err)=>{
             //   console.log(err);
             // })
             })
           }else{
-            console.log('Este archivo no contiene MD');
+            //console.log('Este archivo no contiene MD');
           }
         }
       } else {
-        console.log('ruta resolviendose', );
+        //console.log('ruta resolviendose', );
         const routeAbsolute = resolvePath(route)
         // convertir la ruta
         let stats = statSync(routeAbsolute);
@@ -46,7 +46,7 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
           // resolve('es un archivo', extname(routeAbsolute));
           //creamos la instancia del archivo 
           if (extname(routeAbsolute) === ".md") {
-            console.log('Es un archivo MD');
+           // console.log('Es un archivo MD');
             leerArchivo(routeAbsolute).then((res) => {
               // console.log('*****', extraerLinks(res,routeAbsolute))
               // resolve();
