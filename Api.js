@@ -19,7 +19,7 @@ export const extraerLinks = (contenido, route) => {//Solo Extraer los links
 
   let links = [...contenido.matchAll(regex)].map((m) => ({ text: m[1], link: m[2], href: route }))
 
-  //console.log('aqui pasa algo', links)
+  // console.log('aqui pasa algo', links, contenido, route)
   return links
 }
 

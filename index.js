@@ -50,16 +50,13 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
             leerArchivo(routeAbsolute).then((res) => {
               // console.log('*****', extraerLinks(res,routeAbsolute))
               // resolve();
-             const array3props = extraerLinks(res, routeAbsolute)
+             const array3props = extraerLinks(res, routeAbsolute)  // resultado de extraer links recorrerlo y hacer petcion http
             //  console.table(prueba)
             validLinks(array3props).then((res)=>{
-              console.log(res, 55); // cambiar por resolve
+              console.log(res, 56); // cambiar por resolve
             }).catch((err)=>{
-              console.log(err, 57);
+              console.log(err, 58);
             })
-              // resultado de extraer links recorrerlo y hacer petcion http
-              // const arrayLinks = extraerLinks()
-              //  console.log(arrayLinks)
             })
           } else {
             reject('Este archivo no contiene MD');
@@ -75,6 +72,6 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
   })
 }
 
-mdLinksMl('C:/Users/MARY LOPEZ/DEV004-md-links/README.md')
+mdLinksMl('C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md')
 .catch((err)=>{console.log(err)})
 .then(console.log)
