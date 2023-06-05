@@ -25,9 +25,9 @@ export const extraerLinks = (contenido, route) => {//Solo Extraer los links
 
 //creando función para validar links
 export function validLinks(arrLinks){ //debe recibir un array, que represente mis 3 objetos 
-    // console.log(arrLinks,29);
+     //console.log('AQUI',arrLinks,20);
     const newArr5props = arrLinks.map((object)=>{
-      // console.log(object,31);
+      // console.log('AQUI',object,31);
      return fetch(object.link) //Hacer peticion HTTP
       .then((res)=>{
         // console.log(res.status);

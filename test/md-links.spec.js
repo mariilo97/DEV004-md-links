@@ -1,5 +1,5 @@
 //import {mdLinksMl} from "../index.js";
-import { leerArchivo, extraerLinks } from "../Api.js";
+import { leerArchivo, extraerLinks, validLinks } from "../Api.js";
 
 // describe('mdLinksMl', () => {
 //   it('Deberia devolver una promesa', () => {
@@ -55,15 +55,28 @@ describe('extraerLinks', () => {
   })
 });
 
-// const listaDeCompras = [
-//   'pañales',
-//   'pañuelos',
-//   'bolsas de basura',
-//   'toallas de papel',
-//   'leche',
-// ];
-
-// test('la leche se encuentra en la lista de compras', () => {
-//   expect(listaDeCompras).toContain('leche');
-//   expect(new Set(listaDeCompras)).toContain('leche');
-// });
+describe('validLinks', () => {
+  it('Debe validar enlaces', () => {
+    const resultValid =
+      [{
+        text: 'Markdown',
+        link: 'https://es.wikipedia.org/wiki/Markdown',
+        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+        status: 200,
+        statusText: 'OK👍'
+      },]
+    validLinks(resultValid).then((res) => {
+      expect(res).toBe(true)
+    })
+  })
+  it('No debe validar enlaces', () => {
+    const resulInvalid = [{
+      text: 'Markdown',
+      href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+      statusText: 'OK👍'
+    }]
+    validLinks(resulInvalid).catch((err) => {
+      expect(err).toBe(false)
+    })
+  })
+})
