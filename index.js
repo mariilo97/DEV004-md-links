@@ -17,7 +17,7 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
         //usar "statSync()" es un metodo estatico de fs 
         let stats = statSync(route);
         if(stats.isFile() === true){
-          console.log('es un archivo', extname(route));
+          // console.log('es un archivo', extname(route));
           //creamos la instancia del archivo 
           if(extname(route) === ".md"){
            // console.log('Es un archivo MD');
@@ -25,9 +25,9 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
               //console.log(res, 25);
               const tresObjetos = extraerLinks(res, route)
               validLinks(tresObjetos).then((res)=>{
-                console.log(res, 28);
+                // console.log(res, 28);
               }).catch((err)=>{
-                console.log(err, 30);
+                // console.log(err, 30);
               })
             // }).catch((err)=>{
             //   console.log(err);

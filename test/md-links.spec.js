@@ -1,21 +1,5 @@
-//import {mdLinksMl} from "../index.js";
+import {mdLinksMl} from "../index.js";
 import { leerArchivo, extraerLinks, validLinks } from "../Api.js";
-
-// describe('mdLinksMl', () => {
-//   it('Deberia devolver una promesa', () => {
-//     const res = mdLinksMl('./index.js');
-//     expect(res instanceof Promise).toBe(true);
-//   });
-//   //¡instancia=pertenece a la categoria! "instanceof promise"  
-//   it('Debe rechazar cuando el path no existe', () =>{
-//     return mdLinksMl('/rutaSinExistir.md').catch((error)=>{
-//       expect(error).toBe('La ruta no existe, no podemos continuar')
-//     })
-//   })
-//   it('Debe ser una ruta absoluta', () => {
-//     return expect(Promise.resolve('Readme.md')).resolves.toBe('Readme.md')
-//   })
-// });
 
 describe('leerArchivo', () => {
   it('Deberia devolver una promesa', () => {
@@ -56,27 +40,65 @@ describe('extraerLinks', () => {
 });
 
 describe('validLinks', () => {
-  it('Debe validar enlaces', () => {
+  it('Debe validar enlaces', (done) => {
     const resultValid =
-      [{
-        text: 'Markdown',
-        link: 'https://es.wikipedia.org/wiki/Markdown',
-        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
-        status: 200,
-        statusText: 'OK👍'
-      },]
+    [{
+      link: 'https://user-images.githubusercontent.com/110297/42118443-b7a5f1f0-7bc8-11e8-96ad-9cc5593715a6.jpg',
+      href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+      status: 200,
+      statusText: 'OK👍'
+    },
+    {
+     link: 'https://nodejs.org/es/',
+      href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+      status: undefined,
+      statusText: 'Fail 😒'
+    }]
     validLinks(resultValid).then((res) => {
-      expect(res).toBe(true)
+      expect(res.length).toBe(resultValid.length);
+      expect(res[0].statusText).toBe( 'OK👍')
+      expect(res[1].statusText).toBe( 'Fail 😒')
+      done()
     })
   })
   it('No debe validar enlaces', () => {
     const resulInvalid = [{
-      text: 'Markdown',
+      link: 'https://user-images.githubusercontent.com/110297/42118443-b7a5f1f0-7bc8-11e8-96ad-9cc5593715a6.jpg',
       href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+      status: 200,
       statusText: 'OK👍'
+    },
+    {
+     link: 'https://nodejs.org/es/',
+      href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+      status: undefined,
+      statusText: 'Fail 😒'
     }]
     validLinks(resulInvalid).catch((err) => {
-      expect(err).toBe(false)
+      expect(err.length).toBe(resultInvalid.length)
+      expect(err[0].statusText).toBe('')
+      expect(err[1].statusText).toBe( 'OK👍')
     })
   })
-})
+});
+
+describe('mdLinksMl', () => {
+  // it.only('Deberia devolver una promesa', () => {
+  //   const res = mdLinksMl('./index.js');
+  //   expect(res instanceof Promise).toBe(true);
+  // });
+  //¡instancia=pertenece a la categoria! "instanceof promise"  
+  it('Debe rechazar cuando el path no existe', () => {
+    return mdLinksMl('/rutaSinExistir.md').catch((error) => {
+      expect(error).toBe('La ruta no existe, no podemos continuar')
+    })
+  })
+  // it('la ruta existe', () => {
+  //   return mdLinksMl('README.md').then((res)=>{
+  //     expect(res).resolve(5000)
+  //   })
+  // })
+  // it('Debe ser una ruta absoluta', () => {
+  //   return expect(Promise.resolve('Readme.md')).resolves.toBe('Readme.md')
+  // })
+});
