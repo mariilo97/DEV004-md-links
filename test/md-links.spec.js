@@ -1,10 +1,10 @@
-import {mdLinksMl} from "../index.js";
+import { mdLinksMl } from "../index.js";
 import { leerArchivo, extraerLinks, validLinks } from "../Api.js";
 
 describe('leerArchivo', () => {
   it('Deberia devolver una promesa', () => {
     const res = leerArchivo('./Api.js');
-    expect(res instanceof Promise).toBe(true);
+    expect(res instanceof Promise).toBeTruthy();
   });
   it('Debe leer un archivo', () => {
     leerArchivo('pruebas.md/Prueba3.md').then((res) => {
@@ -42,22 +42,22 @@ describe('extraerLinks', () => {
 describe('validLinks', () => {
   it('Debe validar enlaces', (done) => {
     const resultValid =
-    [{
-      link: 'https://user-images.githubusercontent.com/110297/42118443-b7a5f1f0-7bc8-11e8-96ad-9cc5593715a6.jpg',
-      href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
-      status: 200,
-      statusText: 'OK👍'
-    },
-    {
-     link: 'https://nodejs.org/es/',
-      href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
-      status: undefined,
-      statusText: 'Fail 😒'
-    }]
+      [{
+        link: 'https://user-images.githubusercontent.com/110297/42118443-b7a5f1f0-7bc8-11e8-96ad-9cc5593715a6.jpg',
+        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+        status: 200,
+        statusText: 'OK👍'
+      },
+      {
+        link: 'https://nodejs.org/es/',
+        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+        status: undefined,
+        statusText: 'Fail 😒'
+      }]
     validLinks(resultValid).then((res) => {
       expect(res.length).toBe(resultValid.length);
-      expect(res[0].statusText).toBe( 'OK👍')
-      expect(res[1].statusText).toBe( 'Fail 😒')
+      expect(res[0].statusText).toBe('OK👍')
+      expect(res[1].statusText).toBe('Fail 😒')
       done()
     })
   })
@@ -69,7 +69,7 @@ describe('validLinks', () => {
       statusText: 'OK👍'
     },
     {
-     link: 'https://nodejs.org/es/',
+      link: 'https://nodejs.org/es/',
       href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
       status: undefined,
       statusText: 'Fail 😒'
@@ -77,28 +77,114 @@ describe('validLinks', () => {
     validLinks(resulInvalid).catch((err) => {
       expect(err.length).toBe(resultInvalid.length)
       expect(err[0].statusText).toBe('')
-      expect(err[1].statusText).toBe( 'OK👍')
+      expect(err[1].statusText).toBe('OK👍')
     })
   })
 });
 
 describe('mdLinksMl', () => {
-  // it.only('Deberia devolver una promesa', () => {
-  //   const res = mdLinksMl('./index.js');
-  //   expect(res instanceof Promise).toBe(true);
-  // });
-  //¡instancia=pertenece a la categoria! "instanceof promise"  
+  it.concurrent('Debe devolver un array, ruta convertida en absoluta', (done) => {
+    const resultFinalValid = [
+      {
+        text: 'Markdown',
+        link: 'https://es.wikipedia.org/wiki/Markdown',
+        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+        status: 200,
+        statusText: 'OK👍'
+      },
+      {
+        text: 'Node.js',
+        link: 'https://nodejs.org/',
+        statusText: 'Fail 😒'
+      },
+      {
+        text: 'motor de JavaScript V8 de Chrome',
+        link: 'https://developers.google.com/v8/',
+        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+        status: 200,
+        statusText: 'OK👍'
+      }
+    ]
+    const route = 'pruebas.md/Prueba1.md'
+     mdLinksMl(route, '--validate').then((data) => {
+      expect(data).toEqual(resultFinalValid)
+      done()
+    })
+  })
+     it('Debe devolver un array errado, ruta convertida en absoluta', () => {
+      const resultFinalInvalid = [
+        {
+          text: 'Markdown',
+          link: 'https://es.wikipedia.org/wiki/Markdown',
+          status: 200,
+          statusText: 'OK👍'
+        },
+        {
+          text: 'Node.js',
+          link: 'https://nodejs.org/',
+          statusText: 'Fail 😒'
+        },
+        {
+          text: 'motor de JavaScript V8 de Chrome',
+          link: 'https://developers.google.com/v8/',
+          href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+          statusText: 'OK👍'
+        }
+      ]
+      const route = 'pruebas.md/Prueba1.md'
+
+    expect(mdLinksMl(route, "--validate" )).resolves.toMatch(resultFinalInvalid)
+
+  })
+ it.concurrent('Debe devolver un array, ruta absoluta', () => {
+   const resultValidAbsoluta = [
+      {
+        text: 'Node.js',
+        link: 'https://nodejs.org/es/',
+        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md',
+      
+        statusText: 'Fail 😒'
+      },
+      {
+     
+        link: 'https://developers.google.com/v8/',
+        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md',
+        status: 200,
+        statusText: 'OK👍'
+      }
+    ]
+    const route = 'pruebas.md/Prueba1.md'
+     mdLinksMl(route, '--validate').catch((data) => {
+      expect(data).toMatch(resultValidAbsoluta)
+      
+    })
+  })
+  it.concurrent('Debe devolver un array, ruta es absoluta', (done) => {
+    const resultValidAbsolut = [
+      {
+        text: 'Node.js',
+        link: 'https://nodejs.org/es/',
+        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md',
+        status: undefined,
+        statusText: 'Fail 😒'
+      },
+      {
+        text: 'motor de JavaScript V8 de Chrome',
+        link: 'https://developers.google.com/v8/',
+        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md',
+        status: 200,
+        statusText: 'OK👍'
+      }
+    ]
+    const route = 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md'
+     mdLinksMl(route, '--validate').then((data) => {
+      expect(data).toEqual(resultValidAbsolut)
+      done()
+    })
+  })
   it('Debe rechazar cuando el path no existe', () => {
     return mdLinksMl('/rutaSinExistir.md').catch((error) => {
       expect(error).toBe('La ruta no existe, no podemos continuar')
     })
   })
-  // it('la ruta existe', () => {
-  //   return mdLinksMl('README.md').then((res)=>{
-  //     expect(res).resolve(5000)
-  //   })
-  // })
-  // it('Debe ser una ruta absoluta', () => {
-  //   return expect(Promise.resolve('Readme.md')).resolves.toBe('Readme.md')
-  // })
 });

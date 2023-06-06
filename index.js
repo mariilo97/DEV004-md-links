@@ -16,24 +16,30 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
         //Nuestra ruta absoluta
         //usar "statSync()" es un metodo estatico de fs 
         let stats = statSync(route);
-        if(stats.isFile() === true){
-          // console.log('es un archivo', extname(route));
+        if (stats.isFile() === true) {
+          // resolve('es un archivo', extname(route));
           //creamos la instancia del archivo 
-          if(extname(route) === ".md"){
-           // console.log('Es un archivo MD');
-            leerArchivo(route).then((res)=>{
+          if (extname(route) === ".md") {
+            // console.log('Es un archivo MD');
+            leerArchivo(route).then((res) => {
               //console.log(res, 25);
               const tresObjetos = extraerLinks(res, route)
-              validLinks(tresObjetos).then((res)=>{
-                // console.log(res, 28);
-              }).catch((err)=>{
-                // console.log(err, 30);
-              })
-            // }).catch((err)=>{
-            //   console.log(err);
-            // })
+              if (route, options === "--validate") {
+                validLinks(tresObjetos).then((res) => {
+                  //  console.log(res, 28);
+                  resolve(res)
+                }).catch((err) => {
+                  //  console.log(err, 30);
+                })
+              }
+              if(route, !options){
+                resolve(tresObjetos)
+               }
+              // }).catch((err)=>{
+              //   console.log(err);
+              // })
             })
-          }else{
+          } else {
             //console.log('Este archivo no contiene MD');
           }
         }
@@ -46,17 +52,22 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
           // resolve('es un archivo', extname(routeAbsolute));
           //creamos la instancia del archivo 
           if (extname(routeAbsolute) === ".md") {
-           // console.log('Es un archivo MD');
+            // console.log('Es un archivo MD');
             leerArchivo(routeAbsolute).then((res) => {
               // console.log('*****', extraerLinks(res,routeAbsolute))
               // resolve();
-             const array3props = extraerLinks(res, routeAbsolute)  // resultado de extraer links recorrerlo y hacer petcion http
-            //  console.table(prueba)
-            validLinks(array3props).then((res)=>{
-              console.log(res, 56); // cambiar por resolve
-            }).catch((err)=>{
-              console.log(err, 58);
-            })
+              const array3props = extraerLinks(res, routeAbsolute)  // resultado de extraer links recorrerlo y hacer petcion http
+              //  console.table(prueba)
+              if(routeAbsolute, options === "--validate"){
+              validLinks(array3props).then((res) => {
+                console.log(res, 56);
+                resolve(res) // cambiar por resolve
+              }).catch((err) => {
+                console.log(err, 58);
+              })}
+              if(routeAbsolute, !options){
+                resolve(array3props)
+               }
             })
           } else {
             reject('Este archivo no contiene MD');
@@ -67,11 +78,15 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
       }
     } else {
       //Si no existe la ruta rechazamos la promesa.
-      reject('La ruta no existe, no podemos continuar')    
+      reject('La ruta no existe, no podemos continuar')
     }
   })
 }
-
-mdLinksMl('C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md')
-.catch((err)=>{console.log(err)})
-.then(console.log)
+// mdLinksMl('C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md')
+//    .catch((err) => { console.log(err) })
+//    .then(console.log)
+   if(process.argv.includes('--validate')){
+    mdLinksMl('C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md', '--validate')
+   .catch((err) => { console.log(err) })
+   .then(console.log)
+   }
