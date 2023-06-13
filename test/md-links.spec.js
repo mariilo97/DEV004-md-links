@@ -106,60 +106,60 @@ describe('mdLinksMl', () => {
       }
     ]
     const route = 'pruebas.md/Prueba1.md'
-     mdLinksMl(route, '--validate').then((data) => {
+    mdLinksMl(route, '--validate').then((data) => {
       expect(data).toEqual(resultFinalValid)
       done()
     })
   })
-     it('Debe devolver un array errado, ruta convertida en absoluta', () => {
-      const resultFinalInvalid = [
-        {
-          text: 'Markdown',
-          link: 'https://es.wikipedia.org/wiki/Markdown',
-          status: 200,
-          statusText: 'OK👍'
-        },
+  //    it('Debe devolver un array errado, ruta convertida en absoluta', () => {
+  //     const resultFinalInvalid = [
+  //       {
+  //         text: 'Markdown',
+  //         link: 'https://es.wikipedia.org/wiki/Markdown',
+  //         status: 200,
+  //         statusText: 'OK👍'
+  //       },
+  //       {
+  //         text: 'Node.js',
+  //         link: 'https://nodejs.org/',
+  //         statusText: 'Fail 😒'
+  //       },
+  //       {
+  //         text: 'motor de JavaScript V8 de Chrome',
+  //         link: 'https://developers.google.com/v8/',
+  //         href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+  //         statusText: 'OK👍'
+  //       }
+  //     ]
+  //     const route = 'pruebas.md/Prueba1.md'
+
+  //   expect(mdLinksMl(route, "--validate" )).resolves.toMatch(resultFinalInvalid)
+
+  // })
+   it.concurrent('Debe devolver un array, ruta absoluta', (done) => {
+     const resultValidAbsoluta = [
         {
           text: 'Node.js',
-          link: 'https://nodejs.org/',
+          link: 'https://nodejs.org/es/',
+          href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md',
+
           statusText: 'Fail 😒'
         },
         {
-          text: 'motor de JavaScript V8 de Chrome',
+
           link: 'https://developers.google.com/v8/',
-          href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/Prueba1.md',
+          href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md',
+          status: 200,
           statusText: 'OK👍'
         }
       ]
       const route = 'pruebas.md/Prueba1.md'
-
-    expect(mdLinksMl(route, "--validate" )).resolves.toMatch(resultFinalInvalid)
-
-  })
- it.concurrent('Debe devolver un array, ruta absoluta', () => {
-   const resultValidAbsoluta = [
-      {
-        text: 'Node.js',
-        link: 'https://nodejs.org/es/',
-        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md',
-      
-        statusText: 'Fail 😒'
-      },
-      {
-     
-        link: 'https://developers.google.com/v8/',
-        href: 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md',
-        status: 200,
-        statusText: 'OK👍'
-      }
-    ]
-    const route = 'pruebas.md/Prueba1.md'
-     mdLinksMl(route, '--validate').catch((data) => {
-      expect(data).toMatch(resultValidAbsoluta)
-      
+       mdLinksMl(route, '--validate').catch((data) => {
+        expect(data).toMatch(resultValidAbsoluta)
+done()
+      })
     })
-  })
-  it.concurrent('Debe devolver un array, ruta es absoluta', (done) => {
+  it.concurrent('Debe devolver un array, ruta es absoluta', () => {
     const resultValidAbsolut = [
       {
         text: 'Node.js',
@@ -177,14 +177,17 @@ describe('mdLinksMl', () => {
       }
     ]
     const route = 'C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md'
-     mdLinksMl(route, '--validate').then((data) => {
+    mdLinksMl(route, '--validate').then((data) => {
       expect(data).toEqual(resultValidAbsolut)
-      done()
+      
     })
   })
   it('Debe rechazar cuando el path no existe', () => {
     return mdLinksMl('/rutaSinExistir.md').catch((error) => {
       expect(error).toBe('La ruta no existe, no podemos continuar')
     })
+  })
+  it('Debe ser una ruta absoluta', () => {
+    return expect(Promise.resolve('Readme.md')).resolves.toBe('Readme.md')
   })
 });

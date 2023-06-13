@@ -4,6 +4,7 @@ import { existsSync, statSync } from 'fs';
 // AS es para crear un alias cuando dos nombres son los mismos y no se crucen en la funcion 
 import { isAbsolute, resolve as resolvePath, extname } from 'path';
 import { extraerLinks, leerArchivo, validLinks } from "./Api.js";
+//import { totalstats} from "./calcularStats.js"
 // Mi constante debe tener como parametro Path y Option (lo que necesitamos reconocer y como resolverlo(si valida o no))
 export const mdLinksMl = (route, options) => { // Creamos la instancia de markdown-it
   //Creamos la promesa, Funtion(Ejecuta), Callback(resolve y reject = funcion que resuelve la promesa(.then) o rechasa la promesa(.catch))
@@ -32,9 +33,9 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
                   //  console.log(err, 30);
                 })
               }
-              if(route, !options){
+              if (route, !options) {
                 resolve(tresObjetos)
-               }
+              }
               // }).catch((err)=>{
               //   console.log(err);
               // })
@@ -58,16 +59,17 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
               // resolve();
               const array3props = extraerLinks(res, routeAbsolute)  // resultado de extraer links recorrerlo y hacer petcion http
               //  console.table(prueba)
-              if(routeAbsolute, options === "--validate"){
-              validLinks(array3props).then((res) => {
-                console.log(res, 56);
-                resolve(res) // cambiar por resolve
-              }).catch((err) => {
-                console.log(err, 58);
-              })}
-              if(routeAbsolute, !options){
+              if (routeAbsolute, options === "--validate") {
+                validLinks(array3props).then((res) => {
+                  console.log(res, 64);
+                  resolve(res) // cambiar por resolve
+                }).catch((err) => {
+                  console.log(err, 67);
+                })
+              }
+              if (routeAbsolute, !options) {
                 resolve(array3props)
-               }
+              }
             })
           } else {
             reject('Este archivo no contiene MD');
@@ -85,8 +87,8 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
 // mdLinksMl('C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md')
 //    .catch((err) => { console.log(err) })
 //    .then(console.log)
-   if(process.argv.includes('--validate')){
-    mdLinksMl('C:/Users/MARY LOPEZ/DEV004-md-links/pruebas.md/prueba4.md', '--validate')
-   .catch((err) => { console.log(err) })
-   .then(console.log)
-   }
+// if (process.argv.includes('--validate')) {
+//   mdLinksMl('C:/Users/MARY LOPEZ/DEV004-md-links/README.md', '--validate')
+//     .catch((err) => { console.log(err) })
+//     .then(console.log)
+// }

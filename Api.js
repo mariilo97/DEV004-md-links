@@ -24,31 +24,31 @@ export const extraerLinks = (contenido, route) => {//Solo Extraer los links
 }
 
 //creando función para validar links
-export function validLinks(arrLinks){ //debe recibir un array, que represente mis 3 objetos 
-     //console.log('AQUI',arrLinks,20);
-    const newArr5props = arrLinks.map((object)=>{
-      // console.log('AQUI',object,31);
-     return fetch(object.link) //Hacer peticion HTTP
-      .then((res)=>{
+export function validLinks(arrLinks) { //debe recibir un array, que represente mis 3 objetos 
+  //console.log('AQUI',arrLinks,20);
+  const newArr5props = arrLinks.map((object) => {
+    // console.log('AQUI',object,31);
+    return fetch(object.link) //Hacer peticion HTTP
+      .then((res) => {
         // console.log(res.status);
         object.status = res.status
-        if(res.status <= 299){
+        if (res.status <= 299) {
           object.statusText = 'OK👍'
-        }else{
+        } else {
           object.statusText = 'Fail 😒'
         }
         // object.statusText = res.status <= 299 ? 'OK👍': 'Fail 😒'; // otra forma de llamar la condional 
         // console.log(object);
         return object
       })
-      .catch((error)=>{
+      .catch((error) => {
         // console.log(error, '********');
         object.status = error.status
         object.statusText = 'Fail 😒'
         // console.log(object);
         return object
       })
-    })
-    return Promise.all(newArr5props)
+  })
+  return Promise.all(newArr5props)
 };
 
