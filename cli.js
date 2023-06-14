@@ -15,9 +15,20 @@ import { argv } from 'node:process';
 //     .then(console.log)
 //     }
 
-const route = process.argv[2];
-const option = process.argv[3];
-const option2 = process.argv[4];
+let route;
+let option;
+let option2
+if(process.argv[3].includes('validate') || process.argv[3].includes('stats')){
+    option = process.argv[3];
+    route =  process.argv[2];
+    option2= process.argv[4];
+}else{
+    
+    option = process.argv[4];
+    route  = process.argv[2]+' '+process.argv[3];
+    option2= process.argv[5];
+}
+ 
 
 if (route && option === undefined) {
     mdLinksMl(route)
@@ -33,17 +44,21 @@ if (route && option === undefined) {
         })
         .catch((err) => console.log(("\x1b[31m", err)));
 } else if (route && option === '--validate' && option2 === undefined) {
+    // console.log(route, option, '------------------------------47');
     mdLinksMl(route, option)
         .then((res) => {
+            // console.log(res);
             res.forEach((element, i) => {
                 // console.log(unique(i += 1));
-                console.log(("\x1b[34m", `href: ${element.href}`));
-                console.log(("\x1b[35m", `text: ${element.text}`));
-                console.log(("\x1b[33m", `link: ${element.link}`));
-                if (element.ok === 'OK👍') {
-                    console.log(ok("\x1b[32m", `status : ${element.status}`));
-                    console.log(ok("\x1b[32m", `statusText: ${element.statusText}`));
-                }
+                console.log(("\x1b[34m",`href: ${element.href}`));
+                console.log(("\x1b[35m",`text: ${element.text}`));
+                console.log(("\x1b[33m",`link: ${element.link}`));
+                console.log("\x1b[32m",`status : ${element.status}`);
+                console.log(("\x1b[32m",`statusText: ${element.statusText}`));
+                // if (element.ok === 'OK👍') {
+                //     console.log(ok("\x1b[32m", `status : ${element.status}`));
+                //     console.log(ok("\x1b[32m", `statusText: ${element.statusText}`));
+                // }
                 console.log("\x1b[30m", '------------------------------')
             });
         })
@@ -71,9 +86,11 @@ if (route && option === undefined) {
             console.log(("\x1b[34m", `Broken: ${brokenLinks}`));
         })
         .catch((err) => console.log(error("\x1b[31m", err)));
-} else if (route && option === 'validate' && option2 === '--stats') {
+} else if (route && option === '--validate' && option2 === '--stats') {
+    // console.log(route, option);
     mdLinksMl(route, option)
         .then((res) => {
+            // console.log(res);
             const totalLinks = res.length;
             const linksArray = res.map((object) => object.links);
             const uniqueLinks = linksArray.filter((elem, index) => linksArray.indexOf(elem) === index).length;
@@ -99,3 +116,4 @@ if (route && option === undefined) {
      `
     ));
 };
+

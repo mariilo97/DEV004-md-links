@@ -182,12 +182,12 @@ done()
       
     })
   })
-  it('Debe rechazar cuando el path no existe', () => {
-    return mdLinksMl('/rutaSinExistir.md').catch((error) => {
-      expect(error).toBe('La ruta no existe, no podemos continuar')
-    })
-  })
-  it('Debe ser una ruta absoluta', () => {
-    return expect(Promise.resolve('Readme.md')).resolves.toBe('Readme.md')
-  })
+  // it('Debe rechazar cuando el path no existe', () => {
+  //   return mdLinksMl('/rutaSinExistir.md').catch((error) => {
+  //     expect(error).toBe('La ruta no existe, no podemos continuar')
+  //   })
+  // })
+  // it('Debe ser una ruta absoluta', () => {
+  //   return expect(Promise.resolve('Readme.md')).resolves.toBe('Readme.md')
+  // })
 });

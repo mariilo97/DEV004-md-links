@@ -8,6 +8,7 @@ import { extraerLinks, leerArchivo, validLinks } from "./Api.js";
 // Mi constante debe tener como parametro Path y Option (lo que necesitamos reconocer y como resolverlo(si valida o no))
 export const mdLinksMl = (route, option) => { // Creamos la instancia de markdown-it
   //Creamos la promesa, Funtion(Ejecuta), Callback(resolve y reject = funcion que resuelve la promesa(.then) o rechasa la promesa(.catch))
+  console.log(route, option, '*****');
   return new Promise((resolve, reject) => {
     //Identificamos si es una ruta 
     if (existsSync(route)) {
@@ -25,7 +26,7 @@ export const mdLinksMl = (route, option) => { // Creamos la instancia de markdow
             leerArchivo(route).then((res) => {
               //console.log(res, 25);
               const tresObjetos = extraerLinks(res, route)
-              if (route, option === "--validate") {
+              if (route && option === "--validate") {
                 validLinks(tresObjetos).then((res) => {
                   //  console.log(res, 28);
                   resolve(res)
@@ -33,7 +34,7 @@ export const mdLinksMl = (route, option) => { // Creamos la instancia de markdow
                   //  console.log(err, 30);
                 })
               }
-              if (route, !option) {
+              if (route && !option) {
                 resolve(tresObjetos)
               }
               // }).catch((err)=>{
@@ -47,6 +48,7 @@ export const mdLinksMl = (route, option) => { // Creamos la instancia de markdow
       } else {
         //console.log('ruta resolviendose', );
         const routeAbsolute = resolvePath(route)
+        console.log(routeAbsolute, '**************************************', option);
         // convertir la ruta
         let stats = statSync(routeAbsolute);
         if (stats.isFile() === true) {
@@ -59,15 +61,15 @@ export const mdLinksMl = (route, option) => { // Creamos la instancia de markdow
               // resolve();
               const array3props = extraerLinks(res, routeAbsolute)  // resultado de extraer links recorrerlo y hacer petcion http
               //  console.table(prueba)
-              if (routeAbsolute, option === "--validate") {
+              if (routeAbsolute && option === "--validate") {
                 validLinks(array3props).then((res) => {
-                  //console.log(res, 64);
+                  // console.log(res, 64);
                   resolve(res) // cambiar por resolve
                 }).catch((err) => {
                  // console.log(err, 67);
                 })
               }
-              if (routeAbsolute, !option) {
+              else if (routeAbsolute && option === undefined) {
                 resolve(array3props)
               }
             })
