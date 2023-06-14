@@ -50,7 +50,9 @@ Option: --validate = modulo que crea la peticion HTTP y valida que sea un links 
 Creamos el diagrama de flujo con la intencion de guiarnos en todo momento para la realización completa de este proyecto. 
 
 *Diagrama de flujo de Api. Creamos la funcion mdLinksMl y en esta viviran pequeñas funciones para su total uso. 
-![APIDiagramaDeFlujo](C:/Users/MARY LOPEZ\DEV004-md-links/API-Diagrama de flujo..png)
+
+ ![APIDiagramaDeFlujo](C:/Users/MARY LOPEZ\DEV004-md-links/API-Diagrama de flujo..png)
 
 *Diagrama de flujo de Cli. Damos vida a cada "option" y determinamos su llamada por comando.
-![CLIDiagramaDeFlujo](C:/Users/MARY LOPEZ/DEV004-md-links/CLI-Diagrama de flujo!.png)
+
+ ![CLIDiagramaDeFlujo](C:/Users/MARY LOPEZ/DEV004-md-links/CLI-Diagrama de flujo!.png)
