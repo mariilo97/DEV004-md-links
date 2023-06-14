@@ -28,7 +28,7 @@ if(process.argv[3].includes('validate') || process.argv[3].includes('stats')){
     route  = process.argv[2]+' '+process.argv[3];
     option2= process.argv[5];
 }
- 
+
 
 if (route && option === undefined) {
     mdLinksMl(route)

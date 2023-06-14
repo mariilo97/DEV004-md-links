@@ -17,7 +17,7 @@ Este programa escrito con vanilla JavaScript y utilizando la aplicación Node.js
 
 ## 2. Como instalarlo
 
-+++++++++++++++++++++++
+npm i @mariilo97/md-links
 
 ## 3. Como utilizarlo 
 
