@@ -25,39 +25,40 @@ if (route && option === undefined) {
             res.forEach((element, i) => {
                 console.log(' ');
                 // console.log(unique(i += 1));
-                console.log(`href: ${element.href}`);
-                console.log(`text: ${element.text}`);
-                console.log(`links: ${element.links}`);
-                console.log('---------------------------')
+                console.log("\x1b[34m", `href: ${element.href}`);
+                console.log( "\x1b[35m", `text: ${element.text}`);
+                console.log("\x1b[33m", `link: ${element.link}`);
+                console.log("\x1b[30m", '---------------------------')
             });
         })
-        .catch((err) => console.log((err)));
+        .catch((err) => console.log(("\x1b[31m", err)));
 } else if (route && option === '--validate' && option2 === undefined) {
     mdLinksMl(route, option)
         .then((res) => {
             res.forEach((element, i) => {
                 // console.log(unique(i += 1));
-                console.log((`href: ${element.href}`));
-                console.log((`text: ${element.text}`));
-                console.log((`links: ${element.links}`));
-                if (element.ok === 'ok') {
-                    console.log(ok(`status : ${element.status}`));
-                    console.log(ok(`statusText: ${element.ok}`));
+                console.log(("\x1b[34m", `href: ${element.href}`));
+                console.log(("\x1b[35m", `text: ${element.text}`));
+                console.log(("\x1b[33m", `link: ${element.link}`));
+                if (element.ok === 'OK👍') {
+                    console.log(ok("\x1b[32m", `status : ${element.status}`));
+                    console.log(ok("\x1b[32m", `statusText: ${element.statusText}`));
                 }
-                console.log('------------------------------')
+                console.log("\x1b[30m", '------------------------------')
             });
         })
-        .catch((err) => console.log((err)));
+        .catch((err) => console.log(("\x1b[31m", err)));
 } else if (route && option === '--stats' && option2 === undefined) {
     mdLinksMl(route)
         .then((res) => {
             const totalLinks = res.length;
             const linksArray = res.map((object) => object.links)
             const uniqueLinks = linksArray.filter((elem, index) => linksArray.indexOf(elem) === index).length;
-            console.log(`Total: ${totalLinks}`);
-            console.log(`Unique: ${uniqueLinks}`);
+            console.log("\x1b[36m", `Total: ${totalLinks}`);
+            console.log("\x1b[32m", `Unique: ${uniqueLinks}`);
+            console.log("\x1b[30m", '------------------------------')
         })
-        .catch((err) => console.log((err)));
+        .catch((err) => console.log(("\x1b[31m", err)));
 } else if (route && option === '--stats' && option2 === '--validate') {
     mdLinksMl(route, option2)
         .then((res) => {
@@ -65,11 +66,11 @@ if (route && option === undefined) {
             const linksArray = res.map((object) => object.links);
             const uniqueLinks = linksArray.filter((elem, index) => linksArray.indexOf(elem) === index).length;
             const brokenLinks = res.filter((object) => object.statusText === 'Fail 😒').length;
-            console.log((`Total: ${totalLinks}`));
-            console.log((`Unique: ${uniqueLinks}`));
-            console.log((`Broken: ${brokenLinks}`));
+            console.log(("\x1b[36m", `Total: ${totalLinks}`));
+            console.log(("\x1b[32m", `Unique: ${uniqueLinks}`));
+            console.log(("\x1b[34m", `Broken: ${brokenLinks}`));
         })
-        .catch((err) => console.log(error(err)));
+        .catch((err) => console.log(error("\x1b[31m", err)));
 } else if (route && option === 'validate' && option2 === '--stats') {
     mdLinksMl(route, option)
         .then((res) => {
@@ -77,13 +78,13 @@ if (route && option === undefined) {
             const linksArray = res.map((object) => object.links);
             const uniqueLinks = linksArray.filter((elem, index) => linksArray.indexOf(elem) === index).length;
             const brokenLinks = res.filter((object) => object.statusText === 'Fail 😒').length;
-            console.log((`Total: ${totalLinks}`));
-            console.log((`Unique: ${uniqueLinks}`));
-            console.log((`Broken: ${brokenLinks}`));
+            console.log(("\x1b[36m",`Total: ${totalLinks}`));
+            console.log(("\x1b[32m",`Unique: ${uniqueLinks}`));
+            console.log(("\x1b[34m",`Broken: ${brokenLinks}`));
         })
-        .catch((err) => console.log((err)));
+        .catch((err) => console.log(("\x1b[31m", err)));
 } else if (argv.includes('--help')) {
-    console.log(unique(`
+    console.log(unique("\x1b[32m", `
     md-links <ruta> [opcion]
     
      -<ruta>: La ruta del archivo que se desea evaluar.

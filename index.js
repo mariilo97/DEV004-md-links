@@ -6,7 +6,7 @@ import { isAbsolute, resolve as resolvePath, extname } from 'path';
 import { extraerLinks, leerArchivo, validLinks } from "./Api.js";
 //import { totalstats} from "./calcularStats.js"
 // Mi constante debe tener como parametro Path y Option (lo que necesitamos reconocer y como resolverlo(si valida o no))
-export const mdLinksMl = (route, options) => { // Creamos la instancia de markdown-it
+export const mdLinksMl = (route, option) => { // Creamos la instancia de markdown-it
   //Creamos la promesa, Funtion(Ejecuta), Callback(resolve y reject = funcion que resuelve la promesa(.then) o rechasa la promesa(.catch))
   return new Promise((resolve, reject) => {
     //Identificamos si es una ruta 
@@ -25,7 +25,7 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
             leerArchivo(route).then((res) => {
               //console.log(res, 25);
               const tresObjetos = extraerLinks(res, route)
-              if (route, options === "--validate") {
+              if (route, option === "--validate") {
                 validLinks(tresObjetos).then((res) => {
                   //  console.log(res, 28);
                   resolve(res)
@@ -33,7 +33,7 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
                   //  console.log(err, 30);
                 })
               }
-              if (route, !options) {
+              if (route, !option) {
                 resolve(tresObjetos)
               }
               // }).catch((err)=>{
@@ -59,28 +59,28 @@ export const mdLinksMl = (route, options) => { // Creamos la instancia de markdo
               // resolve();
               const array3props = extraerLinks(res, routeAbsolute)  // resultado de extraer links recorrerlo y hacer petcion http
               //  console.table(prueba)
-              if (routeAbsolute, options === "--validate") {
+              if (routeAbsolute, option === "--validate") {
                 validLinks(array3props).then((res) => {
-                  console.log(res, 64);
+                  //console.log(res, 64);
                   resolve(res) // cambiar por resolve
                 }).catch((err) => {
-                  console.log(err, 67);
+                 // console.log(err, 67);
                 })
               }
-              if (routeAbsolute, !options) {
+              if (routeAbsolute, !option) {
                 resolve(array3props)
               }
             })
           } else {
-            reject('Este archivo no contiene MD');
+            reject('\x1b[31m Este archivo no contiene MD');
           }
         } else {
-          reject('Por el momento no leemos directorios, prueba con un archivo');
+          reject('\x1b[31m Por el momento no leemos directorios, prueba con un archivo');
         }
       }
     } else {
       //Si no existe la ruta rechazamos la promesa.
-      reject('La ruta no existe, no podemos continuar')
+      reject( '\x1b[31m La ruta no existe, no podemos continuar')
     }
   })
 }
